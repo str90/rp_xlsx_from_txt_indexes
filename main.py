@@ -11,13 +11,6 @@ outputPath = currentPath + '\\output\\'
 shutil.rmtree('output', ignore_errors=True, onerror=None)
 Path("output").mkdir(parents=True, exist_ok=True)
 
-index = "236006"
-
-# excelBookHandler = Workbook()
-# mainSheet = excelBookHandler.active
-# mainSheet.title = index
-# cellShift = 2
-
 inputFolder = os.walk("input")
 for root, directories, filenames in inputFolder:
     for filename in filenames:
@@ -42,7 +35,10 @@ for root, directories, filenames in inputFolder:
             line_counter = 1
             for address in input_data:
                 cellName = "A" + str(line_counter)
-                mainSheet[cellName] = address.split(";")[1]
+                if len(address.split(";")) == 1:
+                    mainSheet[cellName] = address
+                else:
+                    mainSheet[cellName] = address.split(";")[1]
                 line_counter += 1
 
             excel_book_name = outputPath + excel_book_name + ".xlsx"
